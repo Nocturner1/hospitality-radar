@@ -154,9 +154,9 @@ SCORE_WEIGHTS = {
     "strategic_impact_24m": 0.20,
 }
 
-THRESHOLD_KEEP = 4.0    # >= 4.0  → Hauptnewsletter
-THRESHOLD_WATCH = 3.2   # 3.2–3.9 → Watchlist
-# < 3.2 → reject
+THRESHOLD_KEEP = 3.5    # >= 3.5  → Hauptnewsletter
+THRESHOLD_WATCH = 2.5   # 2.5–3.4 → Watchlist
+# < 2.5 → reject
 
 # ---------------------------------------------------------------------------
 # Pipeline-Limits
