@@ -1,0 +1,88 @@
+name: Hospitality AI Radar – Wöchentlicher Lauf
+
+on:
+  # Jeden Montag um 06:30 UTC
+  schedule:
+    - cron: "30 6 * * 1"
+
+  # Manuell auslösbar (GitHub UI → Actions → "Run workflow")
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Manuelle Woche (z. B. KW16) – leer lassen für aktuelle"
+        required: false
+        default: ""
+      tier_c:
+        description: "Tier-C-Quellen einschließen?"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+jobs:
+  radar:
+    name: Radar generieren & committen
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: write   # nötig für git push ins Repo
+
+    steps:
+      # 1. Repo auschecken
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # 2. Python einrichten
+      - name: Python 3.12 einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      # 3. Abhängigkeiten installieren
+      - name: Dependencies installieren
+        run: pip install -r requirements.txt
+
+      # 4. Pipeline ausführen
+      - name: Radar-Pipeline ausführen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          ARGS="--output github"
+
+          if [ -n "${{ github.event.inputs.week }}" ]; then
+            ARGS="$ARGS --week ${{ github.event.inputs.week }}"
+          fi
+
+          if [ "${{ github.event.inputs.tier_c }}" = "true" ]; then
+            ARGS="$ARGS --tier-c"
+          fi
+
+          python main.py $ARGS
+
+      # 5. Ergebnisse committen und pushen
+      - name: Ergebnisse committen
+        run: |
+          git config user.name  "Hospitality Radar Bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+
+          git add weekly-reviews/ data/
+
+          # Nur committen wenn es Änderungen gibt
+          if git diff --cached --quiet; then
+            echo "Keine neuen Dateien – nichts zu committen."
+          else
+            WEEK=$(python -c "
+          from datetime import datetime, timezone
+          now = datetime.now(timezone.utc)
+          y, w, _ = now.isocalendar()
+          print(f'{y}-KW{w:02d}')
+          ")
+            git commit -m "radar: $WEEK – automatischer Wochendigest [skip ci]"
+            git push
+          fi
