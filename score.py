@@ -119,7 +119,7 @@ def score_item(client: anthropic.Anthropic, item: RawItem) -> ScoredItem:
         result = json.loads(json_match.group())
 
     except Exception as exc:
-        logger.warning("Scoring-Fehler [%s]: %s", item.get("title", "?")[:60], exc)
+        logger.error("Scoring-Fehler [%s]: %s", item.get("title", "?")[:60], exc, exc_info=True)
         # Fallback: reject
         result = {
             "relevance_hospitality": 1,
