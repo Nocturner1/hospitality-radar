@@ -27,41 +27,38 @@ ScoredItem = dict[str, Any]
 SCORING_PROMPT = """\
 Du bewertest News, Releases und Fachbeiträge für einen wöchentlichen deutschsprachigen Radar zu AI und Automatisierung in Tourismus und Hotellerie.
 
-Zielgruppe:
-Entscheider in Hotellerie und Tourismus.
+Zielgruppe: Entscheider in Hotellerie und Tourismus – von Einzelhotels bis Hotelgruppen.
 
-Bewerte ausschließlich aus Sicht von realem Nutzen für Hotels, Hotelgruppen, touristische Betriebe, Destinationsorganisationen und Travel-Tech-nahe Teams.
+Denke beim Bewerten weit: Ein Artikel muss keinen expliziten Hotelbezug haben, um relevant zu sein.
+Auch folgende Themen sind für Hotels strategisch wichtig:
+- Airline-Insolvenzen und Marktveränderungen (beeinflussen Nachfrage und Distribution)
+- AI-Plattform-News von Google, OpenAI, Anthropic, Microsoft (prägen die Tools von morgen)
+- Agentic AI, MCP, Browser-Agenten, AI-Suche (verändern wie Gäste buchen und recherchieren)
+- Partnerships zwischen Technologiekonzernen und Hospitality (z.B. Google + Hotelkette)
+- Corporate Travel Trends (betreffen MICE und B2B-Segment direkt)
+- Neue Modelle, APIs, Features die Hotels in 12–24 Monaten nutzen werden
 
-Bevorzuge Themen aus diesen Bereichen:
-- Direktbuchung
-- Gästekommunikation
-- CRM / Personalisierung
-- Revenue / Distribution
-- Marketing Automation
-- interne Prozessautomatisierung
-- Contact Center / Reservation / Front Office
-- Agentic AI
-- MCP / WebMCP / AI-Agenten im Buchungskontext
-- neue relevante Tools, Programme, APIs, Produktfeatures und Partnerschaften
+Sei großzügig bei der Bewertung. Im Zweifel lieber watch als reject.
+Nur echte Werbebotschaften ohne Informationswert (z.B. reine Produktanzeigen) ablehnen.
 
-Bewerte das folgende Item und gib ausschließlich valides JSON zurück – kein Markdown, keine Erklärungen.
+Gib ausschließlich valides JSON zurück – kein Markdown, keine Erklärungen.
 
 Felder:
-- relevance_hospitality (1-5)
-- novelty (1-5)
-- testability_90d (1-5)
-- strategic_impact_24m (1-5)
-- category (one of: distribution, revenue, guest_communication, operations, marketing, crm, agent_booking, ai_platforms, other)
+- relevance_hospitality (1-5): Wie relevant für Hotel-/Tourismusentscheider? Großzügig bewerten.
+- novelty (1-5): Wie neu oder überraschend ist das?
+- testability_90d (1-5): Kann ein Hotel das in 90 Tagen konkret testen oder beobachten?
+- strategic_impact_24m (1-5): Wie groß ist die strategische Bedeutung in 24 Monaten?
+- category (one of: distribution, revenue, guest_communication, operations, marketing, crm, agent_booking, ai_platforms, industry_news, other)
 - keep_decision (keep, watch, reject)
-- short_summary_de (max. 2 Sätze)
-- why_it_matters_de (max. 2 Sätze)
-- action_hint_de (max. 1 Satz, konkret und handlungsorientiert)
+- short_summary_de (max. 2 Sätze, sachlich)
+- why_it_matters_de (max. 2 Sätze – auch indirekter Bezug zur Hotellerie ist gültig)
+- action_hint_de (max. 1 Satz – was sollte ein Hotelmanager jetzt tun oder beobachten?)
 
-Regeln:
-- Keine generischen AI-News ohne klaren Hotel-/Tourismusbezug in keep einstufen.
-- Themen rund um MCP, WebMCP, Suchagenten, Browser-Agenten und buchungsfähige Assistenten besonders sorgfältig prüfen.
-- Wenn ein Thema eher strategisch als sofort testbar ist, darf es trotzdem keep sein, wenn die langfristige Relevanz hoch ist.
-- Schreibe nüchtern, konkret und ohne Hype.
+Entscheidungsregeln:
+- keep: relevance_hospitality >= 3 ODER strategic_impact_24m >= 4
+- watch: relevance_hospitality >= 2 ODER novelty >= 3
+- reject: nur reine Werbung, lokale Randnachrichten ohne strategischen Wert, Duplikate
+- Schreibe nüchtern, konkret, ohne Hype. Keine erfundenen Fakten.
 
 INPUT:
 Titel: {title}
