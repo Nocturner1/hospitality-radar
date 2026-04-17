@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alle Ausgaben · Hospitality AI Watch</title>
+  <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8f9fa;
+  color: #1a1a2e;
+  line-height: 1.7;
+}
+
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  color: white;
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.5px; }
+header p  { margin-top: 10px; opacity: 0.75; font-size: 1rem; }
+header .badge {
+  display: inline-block; margin-top: 16px;
+  background: rgba(255,255,255,0.15); border-radius: 20px;
+  padding: 4px 14px; font-size: 0.8rem; letter-spacing: 0.5px;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* Index: Karten-Liste */
+.issue-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+
+.issue-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px 28px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  border-left: 4px solid #2563eb;
+  transition: box-shadow 0.15s;
+}
+.issue-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.issue-card h2 { font-size: 1.1rem; font-weight: 600; }
+.issue-card h2 a { color: #1a1a2e; }
+.issue-card h2 a:hover { color: #2563eb; text-decoration: none; }
+.issue-card .meta { font-size: 0.82rem; color: #6b7280; margin-top: 4px; }
+.issue-card .summary { margin-top: 10px; font-size: 0.9rem; color: #374151; }
+
+/* Digest-Seite */
+.digest-meta {
+  background: white; border-radius: 10px; padding: 16px 20px;
+  margin-bottom: 32px; font-size: 0.85rem; color: #6b7280;
+  display: flex; gap: 20px; flex-wrap: wrap;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.digest-meta span { display: flex; align-items: center; gap: 6px; }
+.pill {
+  background: #eff6ff; color: #1d4ed8;
+  border-radius: 20px; padding: 3px 12px; font-size: 0.8rem; font-weight: 600;
+}
+.pill.watch { background: #fefce8; color: #854d0e; }
+.pill.reject { background: #fef2f2; color: #991b1b; }
+
+section { margin-bottom: 40px; }
+section h2 {
+  font-size: 1.25rem; font-weight: 700;
+  padding-bottom: 8px; margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  display: flex; align-items: center; gap: 10px;
+}
+section h2 .icon { font-size: 1.1rem; }
+
+.summary-box {
+  background: white; border-radius: 10px; padding: 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-size: 0.95rem; line-height: 1.8;
+}
+
+.story-card {
+  background: white; border-radius: 10px; padding: 24px 28px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 16px;
+}
+.story-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: #111827; }
+.story-card .story-row { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; }
+.story-card .label {
+  font-weight: 600; color: #6b7280; min-width: 130px; font-size: 0.82rem;
+  padding-top: 2px;
+}
+.story-card .value { color: #374151; flex: 1; }
+
+.tools-list, .experiments-list { list-style: none; }
+.tools-list li, .experiments-list li {
+  background: white; border-radius: 8px; padding: 14px 18px;
+  margin-bottom: 10px; font-size: 0.9rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.tools-list li::before { content: "🔧"; }
+.experiments-list li::before { content: "🧪"; font-size: 1rem; margin-top: 1px; }
+
+.agent-box {
+  background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+  border: 1px solid #bfdbfe; border-radius: 10px;
+  padding: 20px 24px; font-size: 0.92rem; line-height: 1.8;
+}
+
+.watch-card {
+  background: white; border-radius: 10px; padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 12px;
+  border-left: 3px solid #f59e0b;
+}
+.watch-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+.watch-card p { font-size: 0.88rem; color: #4b5563; }
+
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white;
+        border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+th { background: #f3f4f6; padding: 12px 14px; text-align: left; font-weight: 600;
+     color: #374151; border-bottom: 1px solid #e5e7eb; }
+td { padding: 11px 14px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f9fafb; }
+
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: #6b7280;
+             font-size: 0.88rem; margin-bottom: 24px; }
+.back-link:hover { color: #2563eb; text-decoration: none; }
+
+footer {
+  text-align: center; padding: 32px 24px;
+  font-size: 0.82rem; color: #9ca3af;
+  border-top: 1px solid #e5e7eb;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hospitality AI Watch</h1>
+  <p>Wöchentlicher Radar zu AI &amp; Automatisierung in Tourismus und Hotellerie</p>
+  <span class="badge">Für Entscheider in Hotellerie &amp; Travel-Tech</span>
+</header>
+<div class="container">
+  
+  
+<h2 style="font-size:1.4rem;font-weight:700;margin-bottom:8px;">Alle Ausgaben</h2>
+<p style="color:#6b7280;font-size:0.9rem;">Jeden Montag neu · 1 Ausgabe</p>
+<div class="issue-list">
+<div class="issue-card">
+  <h2><a href="weekly-reviews/2026-KW16.html">Hospitality AI Watch – KW 16</a></h2>
+  <div class="meta">2026 KW16 &nbsp;·&nbsp;
+    <span class="pill">21 Top-Meldungen</span>&nbsp;
+    <span class="pill watch">23 Watchlist</span>
+  </div>
+  
+</div></div>
+
+</div>
+<footer>
+  Automatisch generiert jeden Montag &nbsp;·&nbsp;
+  <a href="https://github.com/Nocturner1/hospitality-radar">GitHub</a>
+</footer>
+</body>
+</html>
