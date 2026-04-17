@@ -136,11 +136,12 @@ def run(
         return
 
     if output == "github":
-        from markdown_writer import write_data_json, write_weekly_review, update_index
+        from markdown_writer import write_data_json
+        from html_writer import write_digest_html, rebuild_index
         write_data_json(scored_items, week_id)
-        write_weekly_review(digest, scored_items, week_id, week_label)
-        update_index(week_id, week_label, digest)
-        logger.info("Markdown-Dateien geschrieben.")
+        write_digest_html(digest, scored_items, week_id, week_label)
+        rebuild_index()
+        logger.info("HTML-Seiten geschrieben.")
         if git_push:
             git_commit_and_push(week_id)
 
