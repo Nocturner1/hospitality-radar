@@ -72,6 +72,16 @@ def write_weekly_review(digest: dict, scored_items: list[ScoredItem], week_id: s
 
     lines: list[str] = []
 
+    # Jekyll Front Matter
+    lines += [
+        "---",
+        f"title: \"Hospitality AI Watch – {week_label}\"",
+        f"date: {generated_at[:10]}",
+        "layout: page",
+        "---",
+        "",
+    ]
+
     # Header
     lines += [
         f"# Hospitality AI Watch – {week_label}",
