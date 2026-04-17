@@ -1,4 +1,4 @@
-anthropic>=0.25.0
+openai>=1.30.0
 feedparser>=6.0.11
 notion-client>=2.2.1
 python-dotenv>=1.0.0

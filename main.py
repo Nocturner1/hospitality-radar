@@ -180,7 +180,7 @@ if __name__ == "__main__":
                         help="Nach dem Schreiben automatisch git push")
     args = parser.parse_args()
 
-    _check_env(["ANTHROPIC_API_KEY"])
+    _check_env(["OPENAI_API_KEY"])
     run(
         dry_run=args.dry_run,
         output=args.output,

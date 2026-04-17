@@ -10,7 +10,7 @@ import logging
 import re
 from typing import Any
 
-import anthropic
+from openai import OpenAI
 
 from config import (
     SCORE_MODEL,
@@ -95,8 +95,8 @@ def _decision_from_score(score: float, llm_decision: str) -> str:
     return "reject"
 
 
-def score_item(client: anthropic.Anthropic, item: RawItem) -> ScoredItem:
-    """Bewertet ein einzelnes Item via Claude und gibt ein erweitertes Dict zurück."""
+def score_item(client: OpenAI, item: RawItem) -> ScoredItem:
+    """Bewertet ein einzelnes Item via OpenAI und gibt ein erweitertes Dict zurück."""
     prompt = SCORING_PROMPT.format(
         title=item.get("title", ""),
         source=item.get("source", ""),
@@ -105,12 +105,12 @@ def score_item(client: anthropic.Anthropic, item: RawItem) -> ScoredItem:
         description=item.get("description", ""),
     )
     try:
-        message = client.messages.create(
+        message = client.chat.completions.create(
             model=SCORE_MODEL,
             max_tokens=600,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw_text = message.content[0].text.strip()
+        raw_text = message.choices[0].message.content.strip()
 
         # JSON aus der Antwort extrahieren (falls doch Markdown dabei)
         json_match = re.search(r"\{.*\}", raw_text, re.DOTALL)
@@ -153,7 +153,7 @@ def score_item(client: anthropic.Anthropic, item: RawItem) -> ScoredItem:
 
 def score_all(items: list[RawItem]) -> list[ScoredItem]:
     """Bewertet alle Items und gibt die vollständige Liste zurück."""
-    client = anthropic.Anthropic()  # liest ANTHROPIC_API_KEY aus Env
+    client = OpenAI()  # liest OPENAI_API_KEY aus Env
     scored: list[ScoredItem] = []
     for i, item in enumerate(items, 1):
         logger.info("  Scoring %d/%d: %s", i, len(items), item.get("title", "")[:60])

@@ -12,7 +12,7 @@ import logging
 import re
 from typing import Any
 
-import anthropic
+from openai import OpenAI
 
 from config import DIGEST_MODEL, MAX_TOP_STORIES, MAX_WATCHLIST
 
@@ -106,7 +106,7 @@ def generate_digest(scored_items: list[ScoredItem]) -> dict:
     Erzeugt den strukturierten Wochendigest.
     Gibt ein Dict zurück, das notion_writer.create_review_page() erwartet.
     """
-    client = anthropic.Anthropic()
+    client = OpenAI()
 
     keep_items = [i for i in scored_items if i.get("decision") == "keep"]
     watch_items = [i for i in scored_items if i.get("decision") == "watch"]
@@ -138,12 +138,12 @@ def generate_digest(scored_items: list[ScoredItem]) -> dict:
     )
 
     try:
-        message = client.messages.create(
+        message = client.chat.completions.create(
             model=DIGEST_MODEL,
             max_tokens=4096,
             messages=[{"role": "user", "content": prompt}],
         )
-        raw_text = message.content[0].text.strip()
+        raw_text = message.choices[0].message.content.strip()
         json_match = re.search(r"\{.*\}", raw_text, re.DOTALL)
         if not json_match:
             raise ValueError(f"Kein JSON im Digest: {raw_text[:300]}")

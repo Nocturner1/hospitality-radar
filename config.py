@@ -169,5 +169,5 @@ LOOKBACK_DAYS = 7        # Nur Artikel der letzten N Tage
 # ---------------------------------------------------------------------------
 # Claude-Modelle
 # ---------------------------------------------------------------------------
-SCORE_MODEL = "claude-3-5-haiku-20241022"     # Günstig, für Massen-Scoring
-DIGEST_MODEL = "claude-3-5-sonnet-20241022"  # Besser, für den Wochendigest
+SCORE_MODEL = "gpt-4o-mini"   # Günstig, für Massen-Scoring
+DIGEST_MODEL = "gpt-4o"       # Besser, für den Wochendigest

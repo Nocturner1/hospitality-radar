@@ -51,7 +51,7 @@ jobs:
       # 4. Pipeline ausführen
       - name: Radar-Pipeline ausführen
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           ARGS="--output github"
 
@@ -71,8 +71,8 @@ jobs:
           git config user.name  "Hospitality Radar Bot"
           git config user.email "radar-bot@users.noreply.github.com"
 
-          # Erst pullen, dann eigene Dateien drauflegen
-          git pull --rebase origin main
+          # Erst pullen (--autostash sichert neue Dateien kurz weg und spielt sie danach wieder ein)
+          git pull --rebase --autostash origin main
 
           git add -f weekly-reviews/ data/
 
