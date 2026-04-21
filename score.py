@@ -50,9 +50,9 @@ Felder:
 - strategic_impact_24m (1-5): Wie groß ist die strategische Bedeutung in 24 Monaten?
 - category (one of: distribution, revenue, guest_communication, operations, marketing, crm, agent_booking, ai_platforms, industry_news, other)
 - keep_decision (keep, watch, reject)
-- short_summary_de (max. 2 Sätze, sachlich)
-- why_it_matters_de (max. 2 Sätze – auch indirekter Bezug zur Hotellerie ist gültig)
-- action_hint_de (max. 1 Satz – was sollte ein Hotelmanager jetzt tun oder beobachten?)
+- short_summary_de (max. 2 Sätze, sachlich – schreibe auf Deutsch mit ä, ö, ü; kein ß, schreibe stattdessen ss)
+- why_it_matters_de (max. 2 Sätze – auch indirekter Bezug zur Hotellerie ist gültig; kein ß)
+- action_hint_de (max. 1 Satz – was sollte ein Hotelmanager jetzt tun oder beobachten?; kein ß)
 
 Entscheidungsregeln:
 - keep: relevance_hospitality >= 3 ODER strategic_impact_24m >= 4
@@ -67,6 +67,32 @@ Datum: {published_at}
 URL: {url}
 Beschreibung: {description}
 """
+
+
+def _clean_german(text: str) -> str:
+    """
+    Bereinigt deutschen Text:
+    - Ersetzt ß durch ss
+    - Repariert häufige CP437/CP850-Mojibake (z.B. \x84 → ä, \x94 → ö, \x81 → ü)
+    - Entfernt nicht-druckbare Steuerzeichen
+    """
+    if not text:
+        return text
+    # CP437/CP850 → korrekte Umlaute
+    cp437 = {
+        '\x84': 'ä', '\x8e': 'Ä',
+        '\x94': 'ö', '\x99': 'Ö',
+        '\x81': 'ü', '\x9a': 'Ü',
+        '\xe1': 'ss',  # ß in CP437
+        '\x96': 'ö',  # häufig bei Windows-1252-Mojibake
+    }
+    for bad, good in cp437.items():
+        text = text.replace(bad, good)
+    # ß → ss
+    text = text.replace('ß', 'ss')
+    # Steuerzeichen U+0080–U+009F entfernen (C1 control characters)
+    text = ''.join(c if ord(c) >= 0x20 and not (0x80 <= ord(c) <= 0x9F) else '' for c in text)
+    return text
 
 
 def _calculate_score(result: dict) -> float:
@@ -142,9 +168,9 @@ def score_item(client: OpenAI, item: RawItem) -> ScoredItem:
         "score": score,
         "category": result.get("category", "other"),
         "decision": decision,
-        "summary_de": result.get("short_summary_de", ""),
-        "why_it_matters_de": result.get("why_it_matters_de", ""),
-        "action_hint_de": result.get("action_hint_de", ""),
+        "summary_de":      _clean_german(result.get("short_summary_de", "")),
+        "why_it_matters_de": _clean_german(result.get("why_it_matters_de", "")),
+        "action_hint_de":  _clean_german(result.get("action_hint_de", "")),
     }
 
 
