@@ -66,8 +66,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(9,9,15,0.92);backdrop-filt
 .story-card.lead .card-headline{font-size:1.55rem;}
 .card-deck{font-size:0.83rem;color:#9ca3af;line-height:1.65;}
 .card-rule{height:1px;background:var(--border);margin:18px 0;}
-.card-action{font-size:0.75rem;color:var(--accent);font-weight:500;letter-spacing:0.3px;}
-.card-action::before{content:'→  ';}
+.card-headline-link{color:inherit;text-decoration:none;}
+.card-headline-link:hover{color:var(--accent2);}
+.card-action{font-size:0.75rem;color:var(--muted);font-weight:400;line-height:1.55;margin-bottom:8px;}
+.card-link{font-size:0.72rem;color:var(--accent);font-weight:600;letter-spacing:0.3px;display:inline-block;}
+.card-link:hover{color:var(--accent2);}
 
 /* STORY ROW (3-col) */
 .story-row{max-width:1120px;margin:1px auto 0;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;}
@@ -103,6 +106,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(9,9,15,0.92);backdrop-filt
 .watch-row{padding:14px 0 14px 14px;border-bottom:1px solid var(--border);border-left:1px solid var(--accent);}
 .watch-row:first-of-type{border-top:1px solid var(--border);}
 .watch-title{font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:5px;}
+.watch-link{color:var(--text);text-decoration:none;}
+.watch-link:hover{color:var(--accent2);}
 .watch-text{font-size:0.75rem;color:var(--muted);line-height:1.55;}
 
 /* ARCHIVE */
@@ -182,7 +187,7 @@ footer{border-top:1px solid var(--border);padding:28px 40px;display:flex;justify
   <span class="section-rule-label">&nbsp;&nbsp;Executive Summary</span>
   <div class="section-rule-line"></div>
 </div><div style="max-width:1120px;margin:0 auto;padding:0 40px 40px;">
-  <p class="summary-para">Die wichtigsten KI- und Technologie-Entwicklungen fuer die Hotellerie dieser Woche.</p>
+  <p class="summary-para">Die wichtigsten KI- und Technologie-Entwicklungen fuer die Hotellerie dieser Woche ? kuratiert und nach Relevanz bewertet.</p>
 </div><div class="section-rule">
   <div class="section-rule-accent"></div>
   <span class="section-rule-label">&nbsp;&nbsp;Top-Meldungen</span>
@@ -191,41 +196,41 @@ footer{border-top:1px solid var(--border);padding:28px 40px;display:flex;justify
   <div class="story-card lead">
   <div class="card-source">Google Cloud Blog</div>
   <div class="card-tag tag-ai">AI Platforms</div>
-  <div class="card-headline">Claude Opus 4.7 on Vertex AI</div>
-  <div class="card-deck">Die neue Version von Claude Opus 4.7 auf Vertex AI bietet signifikante Verbesserungen in der Problemfindung und dem Umgang mit umfangreichen Aufgaben durch erweiterte Speicherkapazitäten und verbesser</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklung von KI-Plattformen beobachten und prüfen, wie sie diese Technologien in ihren Betrieb integrieren können.</div>
+  <div class="card-headline"><a href="https://cloud.google.com/blog/products/ai-machine-learning/claude-opus-4-7-on-vertex-ai/" target="_blank" rel="noopener" class="card-headline-link">Claude Opus 4.7 on Vertex AI</a></div>
+  <div class="card-deck">Die neue Version von Claude Opus 4.7 auf Vertex AI bietet signifikante Verbesserungen in der Problemfindung und dem Umgang mit umfangreichen Aufgaben durch erweiterte Speicherkapazitäten und verbesserte Bildverarbeitung. Dies stellt eine relevante Entwicklung für die Integration von KI-gestützten Anwendungen in der Hotellerie dar.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklung von KI-Plattformen beobachten und prüfen, wie sie diese Technologien in ihren Betrieb integrieren können.</div><a href="https://cloud.google.com/blog/products/ai-machine-learning/claude-opus-4-7-on-vertex-ai/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div>
   <div class="story-right"><div class="story-card">
   <div class="card-source">Skift</div>
   <div class="card-tag tag-dist">Distribution</div>
-  <div class="card-headline">SiteMinder Wants Hotels to Show Up When AI Does the Booking</div>
-  <div class="card-deck">SiteMinder verbindet seine umfangreiche Hotel-Inventardatenbank mit Echtzeitdaten, um die Sichtbarkeit von Hotels für AI-gesteuerte Buchungen zu erhöhen. Dies könnte die Art und Weise, wie Hotels in d</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen von SiteMinder beobachten und deren Technologie testen, um die eigene Auffindbarkeit in AI-gesteuerten Buchungsprozessen zu optimieren.</div>
+  <div class="card-headline"><a href="https://skift.com/2026/04/15/siteminder-hotels-ai-discovery-directbooker/" target="_blank" rel="noopener" class="card-headline-link">SiteMinder Wants Hotels to Show Up When AI Does the Booking</a></div>
+  <div class="card-deck">SiteMinder verbindet seine umfangreiche Hotel-Inventardatenbank mit Echtzeitdaten, um die Sichtbarkeit von Hotels für AI-gesteuerte Buchungen zu erhöhen. Dies könnte die Art und Weise, wie Hotels in der AI-zentrierten Buchungslandschaft wahrgenommen werden, erheblich beeinflussen.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen von SiteMinder beobachten und deren Technologie testen, um die eigene Auffindbarkeit in AI-gesteuerten Buchungsprozessen zu optimieren.</div><a href="https://skift.com/2026/04/15/siteminder-hotels-ai-discovery-directbooker/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div><div class="story-card">
   <div class="card-source">Google Cloud Blog</div>
   <div class="card-tag tag-ops">Operations</div>
-  <div class="card-headline">How SAP Concur automates expense reporting with agentic AI</div>
-  <div class="card-deck">SAP Concur nutzt agentic AI zur Automatisierung von Spesenberichten und verbessert die Verarbeitung fehlender Daten. Diese neue Technologie könnte die Effizienz im Finanzmanagement von Hotels steigern</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Implementierung solcher Technologien bei ihren Finanzabteilungen in Betracht ziehen und die Entwicklungen in diesem Bereich beobachten.</div>
+  <div class="card-headline"><a href="https://cloud.google.com/blog/products/ai-machine-learning/how-sap-concur-automates-expense-reporting-with-agentic-ai/" target="_blank" rel="noopener" class="card-headline-link">How SAP Concur automates expense reporting with agentic AI</a></div>
+  <div class="card-deck">SAP Concur nutzt agentic AI zur Automatisierung von Spesenberichten und verbessert die Verarbeitung fehlender Daten. Diese neue Technologie könnte die Effizienz im Finanzmanagement von Hotels steigern.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Implementierung solcher Technologien bei ihren Finanzabteilungen in Betracht ziehen und die Entwicklungen in diesem Bereich beobachten.</div><a href="https://cloud.google.com/blog/products/ai-machine-learning/how-sap-concur-automates-expense-reporting-with-agentic-ai/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div></div>
 </div><div class="story-row"><div class="story-card">
   <div class="card-source">Google – The Keyword</div>
   <div class="card-tag tag-ai">AI Platforms</div>
-  <div class="card-headline">Gemini 3.1 Flash TTS: the next generation of expressive AI speech</div>
+  <div class="card-headline"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-tts/" target="_blank" rel="noopener" class="card-headline-link">Gemini 3.1 Flash TTS: the next generation of expressive AI speech</a></div>
   <div class="card-deck">Google kündigt das Gemini 3.1 Flash TTS an, eine weiterentwickelte KI-Sprachsynthese mit verbesserter Ausdruckskraft.</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen in der KI-Sprachsynthese beobachten, um zukünftige Implementierungen zu planen.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen in der KI-Sprachsynthese beobachten, um zukünftige Implementierungen zu planen.</div><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-tts/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div><div class="story-card">
   <div class="card-source">Skift</div>
   <div class="card-tag tag-industry">Industry News</div>
-  <div class="card-headline">Saudi Arabia Scraps Tourism Funding In Vision 2030 Shake-Up</div>
+  <div class="card-headline"><a href="https://skift.com/2026/04/16/saudi-arabia-scraps-tourism-funding-in-vision-2030-shake-up/" target="_blank" rel="noopener" class="card-headline-link">Saudi Arabia Scraps Tourism Funding In Vision 2030 Shake-Up</a></div>
   <div class="card-deck">Saudi-Arabien reduziert die Finanzierung im Tourismus im Rahmen der Vision 2030, was erhebliche Auswirkungen auf den Tourismussektor haben könnte.</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen in Saudi-Arabien beobachten, um potenzielle Auswirkungen auf die Nachfrage und Marktveränderungen zu verstehen.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Entwicklungen in Saudi-Arabien beobachten, um potenzielle Auswirkungen auf die Nachfrage und Marktveränderungen zu verstehen.</div><a href="https://skift.com/2026/04/16/saudi-arabia-scraps-tourism-funding-in-vision-2030-shake-up/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div><div class="story-card">
   <div class="card-source">Google Cloud Blog</div>
   <div class="card-tag tag-ai">AI Platforms</div>
-  <div class="card-headline">Multi-region endpoints are available for Claude on Vertex AI</div>
-  <div class="card-deck">Google Cloud bietet jetzt Multi-Regionendpunkte für Claude auf Vertex AI in der öffentlichen Vorschau an, um die Zuverlässigkeit zu verbessern und gleichzeitig Compliance-Anforderungen zu erfüllen. Di</div>
-  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Möglichkeiten von Multi-Regionendpunkten zur Verbesserung ihrer KI-gestützten Systeme beobachten.</div>
+  <div class="card-headline"><a href="https://cloud.google.com/blog/products/ai-machine-learning/multi-region-endpoints-for-claude-available-on-vertex-ai/" target="_blank" rel="noopener" class="card-headline-link">Multi-region endpoints are available for Claude on Vertex AI</a></div>
+  <div class="card-deck">Google Cloud bietet jetzt Multi-Regionendpunkte für Claude auf Vertex AI in der öffentlichen Vorschau an, um die Zuverlässigkeit zu verbessern und gleichzeitig Compliance-Anforderungen zu erfüllen. Dies ermöglicht eine widerstandsfähigere Architektur für die Verarbeitung von Daten in der bevorzugten Geografie.</div>
+  <div class="card-rule"></div><div class="card-action">Hotelmanager sollten die Möglichkeiten von Multi-Regionendpunkten zur Verbesserung ihrer KI-gestützten Systeme beobachten.</div><a href="https://cloud.google.com/blog/products/ai-machine-learning/multi-region-endpoints-for-claude-available-on-vertex-ai/" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>
 </div></div><div class="section-rule">
   <div class="section-rule-accent"></div>
   <span class="section-rule-label">&nbsp;&nbsp;Analyse &amp; Kontext</span>
@@ -237,24 +242,24 @@ footer{border-top:1px solid var(--border);padding:28px 40px;display:flex;justify
 </div></div>
   <div class="sidebar"><div class="agent-block">
   <div class="agent-label">Agent Booking Watch</div>
-  <p class="agent-text">Buchungsautomatisierung durch KI-Agenten gewinnt weiter an Fahrt. Hotels sollten ihre Datenverfuegbarkeit fuer externe Agenten pruefen.</p>
+  <p class="agent-text">Buchungsautomatisierung durch KI-Agenten gewinnt an Fahrt. Hotels sollten Datenverfuegbarkeit und Sichtbarkeit in KI-Kanaelen pruefen.</p>
 </div><div class="sidebar-block">
   <div class="block-label">Hotels testen jetzt</div>
-  <div class="exp-row"><span class="exp-n">01</span><span>Eigenes Hotel in einem KI-Assistenten suchen ? welche Informationen werden angezeigt?</span></div><div class="exp-row"><span class="exp-n">02</span><span>Automatisierten Gaestefragebogen mit LLM testen.</span></div><div class="exp-row"><span class="exp-n">03</span><span>Revenue-Forecast mit KI-Tool vergleichen.</span></div>
+  <div class="exp-row"><span class="exp-n">01</span><span>Eigenes Hotel in einem KI-Assistenten suchen: welche Daten werden angezeigt?</span></div><div class="exp-row"><span class="exp-n">02</span><span>Einen Gaestefragebogen von einem LLM beantworten lassen und Qualitaet bewerten.</span></div><div class="exp-row"><span class="exp-n">03</span><span>Revenue-Forecast manuell und per KI vergleichen.</span></div>
 </div><div class="sidebar-block" style="margin-top:32px;">
   <div class="block-label">Watchlist</div>
   <div class="watch-row">
-  <div class="watch-title">The Case for Smarter Global Advocacy For Travel — Not More Cheerleading</div>
-  <div class="watch-text">Der Artikel diskutiert die Notwendigkeit einer intelligenteren globalen Advocacy für die Reisebranche anstelle von bloße</div>
+  <div class="watch-title"><a href="https://skift.com/2026/04/16/the-case-for-smarter-global-advocacy-for-travel-not-more-cheerleading/" target="_blank" rel="noopener" class="watch-link">The Case for Smarter Global Advocacy For Travel — Not More Cheerleading</a></div>
+  <div class="watch-text">Der Artikel diskutiert die Notwendigkeit einer intelligenteren globalen Advocacy für die Reisebranche anstelle von bloßer Jubelrhetorik. Er beleuchtet, wie diese Instinkte die Wahrnehmung der Branche bei Entscheidungsträgern beeinflussen.</div>
 </div><div class="watch-row">
-  <div class="watch-title">Akasa Heads to Hanoi as Iran War Freezes Gulf Expansion Plans</div>
-  <div class="watch-text">Akasa Airlines expandiert in Südostasien, während sich die Wachstumspläne im Golfraum aufgrund des Iran-Konflikts verlan</div>
+  <div class="watch-title"><a href="https://skift.com/2026/04/16/akasa-southeast-asia-iran-war-middle-east/" target="_blank" rel="noopener" class="watch-link">Akasa Heads to Hanoi as Iran War Freezes Gulf Expansion Plans</a></div>
+  <div class="watch-text">Akasa Airlines expandiert in Südostasien, während sich die Wachstumspläne im Golfraum aufgrund des Iran-Konflikts verlangsamen. Dies könnte Auswirkungen auf die Reiseströme in der Region haben.</div>
 </div><div class="watch-row">
-  <div class="watch-title">No Merger Talk for Delta: ‘We’re Successful on Our Own’</div>
-  <div class="watch-text">Delta Airlines betont, dass sie ohne Übernahmen erfolgreich sind und sieht Konsolidierung unter finanziell schwachen Flu</div>
+  <div class="watch-title"><a href="https://skift.com/2026/04/15/no-merger-talk-for-delta-were-successful-on-our-own/" target="_blank" rel="noopener" class="watch-link">No Merger Talk for Delta: ‘We’re Successful on Our Own’</a></div>
+  <div class="watch-text">Delta Airlines betont, dass sie ohne Übernahmen erfolgreich sind und sieht Konsolidierung unter finanziell schwachen Fluggesellschaften. Die Diskussion über potenzielle Megafusionen im Airline-Sektor bleibt relevant.</div>
 </div><div class="watch-row">
-  <div class="watch-title">Proven Brands for Exceptional Guest Experiences</div>
-  <div class="watch-text">Conair Hospitality bietet bekannte Markenprodukte, die Hotels helfen, ein vertrautes Ambiente für Gäste zu schaffen. Die</div>
+  <div class="watch-title"><a href="https://www.hotelmanagement.net/resource/proven-brands-exceptional-guest-experiences" target="_blank" rel="noopener" class="watch-link">Proven Brands for Exceptional Guest Experiences</a></div>
+  <div class="watch-text">Conair Hospitality bietet bekannte Markenprodukte, die Hotels helfen, ein vertrautes Ambiente für Gäste zu schaffen. Dies beinhaltet eine Vielzahl von persönlichen Pflegeprodukten und Küchengeräten.</div>
 </div>
 </div></div>
 </div>

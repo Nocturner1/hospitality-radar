@@ -87,8 +87,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(9,9,15,0.92);backdrop-filt
 .story-card.lead .card-headline{font-size:1.55rem;}
 .card-deck{font-size:0.83rem;color:#9ca3af;line-height:1.65;}
 .card-rule{height:1px;background:var(--border);margin:18px 0;}
-.card-action{font-size:0.75rem;color:var(--accent);font-weight:500;letter-spacing:0.3px;}
-.card-action::before{content:'→  ';}
+.card-headline-link{color:inherit;text-decoration:none;}
+.card-headline-link:hover{color:var(--accent2);}
+.card-action{font-size:0.75rem;color:var(--muted);font-weight:400;line-height:1.55;margin-bottom:8px;}
+.card-link{font-size:0.72rem;color:var(--accent);font-weight:600;letter-spacing:0.3px;display:inline-block;}
+.card-link:hover{color:var(--accent2);}
 
 /* STORY ROW (3-col) */
 .story-row{max-width:1120px;margin:1px auto 0;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;overflow:hidden;}
@@ -124,6 +127,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(9,9,15,0.92);backdrop-filt
 .watch-row{padding:14px 0 14px 14px;border-bottom:1px solid var(--border);border-left:1px solid var(--accent);}
 .watch-row:first-of-type{border-top:1px solid var(--border);}
 .watch-title{font-size:0.82rem;font-weight:600;color:var(--text);margin-bottom:5px;}
+.watch-link{color:var(--text);text-decoration:none;}
+.watch-link:hover{color:var(--accent2);}
 .watch-text{font-size:0.75rem;color:var(--muted);line-height:1.55;}
 
 /* ARCHIVE */
@@ -231,15 +236,39 @@ def _section_rule(label: str) -> str:
 
 
 def _story_card(story: dict, lead: bool = False) -> str:
-    cls = "story-card lead" if lead else "story-card"
+    cls    = "story-card lead" if lead else "story-card"
+    url    = story.get("url", "")
     action = story.get("action", "")
-    action_html = f'<div class="card-rule"></div><div class="card-action">{_esc(action)}</div>' if action else ""
+    deck   = story.get("what_happened", "")
+
+    # Headline – klickbar wenn URL vorhanden
+    title_escaped = _esc(story.get("title", ""))
+    if url:
+        headline_html = (
+            f'<a href="{url}" target="_blank" rel="noopener" class="card-headline-link">'
+            f'{title_escaped}</a>'
+        )
+    else:
+        headline_html = title_escaped
+
+    # Unterer Bereich: Handlungshinweis + Direktlink
+    footer_parts = []
+    if action:
+        footer_parts.append(f'<div class="card-action">{_esc(action)}</div>')
+    if url:
+        footer_parts.append(
+            f'<a href="{url}" target="_blank" rel="noopener" class="card-link">Zum Artikel →</a>'
+        )
+    footer_html = ""
+    if footer_parts:
+        footer_html = '<div class="card-rule"></div>' + "".join(footer_parts)
+
     return f"""<div class="{cls}">
   <div class="card-source">{_esc(story.get('source', ''))}</div>
   {_tag_html(story.get('category', 'other'))}
-  <div class="card-headline">{_esc(story.get('title', ''))}</div>
-  <div class="card-deck">{_esc(story.get('what_happened', ''))}</div>
-  {action_html}
+  <div class="card-headline">{headline_html}</div>
+  <div class="card-deck">{_esc(deck)}</div>
+  {footer_html}
 </div>"""
 
 
@@ -250,16 +279,19 @@ def generate_digest_html(digest: dict, scored_items: list[ScoredItem],
     year  = week_id[:4]
     kw_short = week_label.replace("KW ", "").strip()
 
-    # Enrich stories with category + source from scored_items
+    # Enrich stories with category, source, url from scored_items
     title_map = {i.get("title", "").lower(): i for i in scored_items}
     stories = digest.get("top_stories", [])
     for s in stories:
         key = s.get("title", "").lower()
         matched = title_map.get(key)
-        if not s.get("category") and matched:
-            s["category"] = matched.get("category", "other")
-        if not s.get("source") and matched:
-            s["source"] = matched.get("source", "")
+        if matched:
+            if not s.get("category"):
+                s["category"] = matched.get("category", "other")
+            if not s.get("source"):
+                s["source"] = matched.get("source", "")
+            if not s.get("url"):
+                s["url"] = matched.get("url", "")
 
     # ── MASTHEAD ──────────────────────────────────────────────────────────────
     masthead = f"""<div class="masthead">
@@ -348,11 +380,22 @@ def generate_digest_html(digest: dict, scored_items: list[ScoredItem],
 </div>"""
 
     # ── WATCHLIST ─────────────────────────────────────────────────────────────
+    # Enrich watchlist with URL from scored_items
     watchlist = digest.get("watchlist", [])
+    for w in watchlist:
+        key = w.get("title", "").lower()
+        matched = title_map.get(key)
+        if matched and not w.get("url"):
+            w["url"] = matched.get("url", "")
     watch_rows = ""
     for w in watchlist:
+        wurl = w.get("url", "")
+        title_html = (
+            f'<a href="{wurl}" target="_blank" rel="noopener" class="watch-link">{_esc(w.get("title",""))}</a>'
+            if wurl else _esc(w.get("title", ""))
+        )
         watch_rows += f"""<div class="watch-row">
-  <div class="watch-title">{_esc(w.get('title', ''))}</div>
+  <div class="watch-title">{title_html}</div>
   <div class="watch-text">{_esc(w.get('comment', ''))}</div>
 </div>"""
     watch_block = f"""<div class="sidebar-block" style="margin-top:32px;">
