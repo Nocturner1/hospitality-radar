@@ -322,14 +322,7 @@ def generate_digest_html(digest: dict, scored_items: list[ScoredItem],
   </div>
 </div>"""
 
-    # ── EXECUTIVE SUMMARY ────────────────────────────────────────────────────
-    summary_html = ""
-    exec_sum = digest.get("executive_summary", "")
-    if exec_sum:
-        summary_html = _section_rule("Executive Summary")
-        summary_html += f"""<div style="max-width:1120px;margin:0 auto;padding:0 40px 40px;">
-  <p class="summary-para">{_esc(exec_sum)}</p>
-</div>"""
+    summary_html = ""  # Executive Summary entfernt
 
     # ── TOP STORIES ───────────────────────────────────────────────────────────
     stories_html = ""
